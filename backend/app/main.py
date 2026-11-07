@@ -1,4 +1,5 @@
 import os
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -7,10 +8,21 @@ from fastapi.responses import JSONResponse
 from app.config import settings
 from app.routers import auth, admin, candidates, exams, hr, jobs_notifications
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Auto-initialize database tables and seed initial data if empty
+    try:
+        from app.seeder import init_and_seed_db
+        init_and_seed_db()
+    except Exception as e:
+        print(f"Warning: Database auto-init error: {e}")
+    yield
+
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version=settings.VERSION,
-    description="Full-Stack Job Portal Based on Online Examination System with MySQL and FastAPI"
+    description="Full-Stack Job Portal Based on Online Examination System with MySQL and FastAPI",
+    lifespan=lifespan
 )
 
 # Enable CORS for React frontend

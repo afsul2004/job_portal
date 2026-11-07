@@ -34,9 +34,9 @@ def init_db():
     # Now insert default hashed users:
     admin_pw = get_password_hash("Admin@123")
     hr_pw = get_password_hash("Hr@123")
-    cand1_pw = get_password_hash("Candidate@123")
-    cand2_pw = get_password_hash("Candidate@123")
-    cand3_pw = get_password_hash("Candidate@123")
+    cand1_pw = get_password_hash("Afsal123")
+    cand2_pw = get_password_hash("Nafil123")
+    cand3_pw = get_password_hash("Dhine123")
 
     cursor.execute("USE `job_portal_exam`;")
 
@@ -44,9 +44,9 @@ def init_db():
     users_data = [
         ("System Administrator", "admin@jobportal.com", admin_pw, "ADMIN", "ACTIVE", "+91 9876543210"),
         ("Sarah Jenkins (HR)", "hr@jobportal.com", hr_pw, "HR", "ACTIVE", "+91 9876543211"),
-        ("Rahul Sharma (Programmer Candidate)", "rahul@example.com", cand1_pw, "CANDIDATE", "APPROVED", "+91 9876543212"),
-        ("Priya Patel (Data Entry Candidate)", "priya@example.com", cand2_pw, "CANDIDATE", "APPROVED", "+91 9876543213"),
-        ("Amit Kumar (New Candidate)", "amit@example.com", cand3_pw, "CANDIDATE", "PENDING", "+91 9876543214")
+        ("Afsaldeen", "afsal123@gmail.com", cand1_pw, "CANDIDATE", "APPROVED", "+91 9876543201"),
+        ("Nafeel", "nafil123@gmail.com", cand2_pw, "CANDIDATE", "APPROVED", "+91 9876543202"),
+        ("Dhina", "dhina123@gmail.com", cand3_pw, "CANDIDATE", "APPROVED", "+91 9876543203")
     ]
 
     for u in users_data:
@@ -61,9 +61,9 @@ def init_db():
 
     admin_id = user_map["admin@jobportal.com"]
     hr_id = user_map["hr@jobportal.com"]
-    rahul_id = user_map["rahul@example.com"]
-    priya_id = user_map["priya@example.com"]
-    amit_id = user_map["amit@example.com"]
+    cand1_id = user_map["afsal123@gmail.com"]
+    cand2_id = user_map["nafil123@gmail.com"]
+    cand3_id = user_map["dhina123@gmail.com"]
 
     # Insert HR profile
     cursor.execute("""
@@ -76,27 +76,28 @@ def init_db():
         INSERT INTO `candidate_profiles` 
         (`user_id`, `qualification`, `stream_specialization`, `academic_percentage`, `passing_year`, `preferred_city_id`, `allocated_centre_id`, `address`, `dob`, `gender`, `skills`)
         VALUES 
-        (%s, 'B.Tech / B.E', 'Computer Science and Engineering', 82.50, 2025, 1, 1, 'Flat 402, Anna Nagar, Chennai', '2003-05-14', 'MALE', 'Python, React, MySQL, FastAPI, Data Structures'),
-        (%s, 'B.Com / B.Sc', 'Information Systems', 71.00, 2024, 2, 3, '12th Main Road, Indiranagar, Bengaluru', '2002-11-20', 'FEMALE', 'Typing 50wpm, MS Excel, Database entry, Documentation'),
-        (%s, 'B.Tech', 'Information Technology', 68.00, 2025, 1, 2, '24 Gandhi Street, Tambaram, Chennai', '2003-02-10', 'MALE', 'Basic Java, HTML, Office Tools')
-    """, (rahul_id, priya_id, amit_id))
+        (%s, 'B.Tech / B.E', 'Computer Science and Engineering', 85.00, 2025, 1, 1, 'Flat 402, Anna Nagar, Chennai', '2003-05-14', 'MALE', 'Python, React, MySQL, FastAPI, Data Structures'),
+        (%s, 'B.Com / B.Sc', 'Information Systems', 78.00, 2024, 2, 3, '12th Main Road, Indiranagar, Bengaluru', '2002-11-20', 'MALE', 'Typing 50wpm, MS Excel, Database entry, Documentation'),
+        (%s, 'B.Tech', 'Information Technology', 72.00, 2025, 3, 4, '24 Gandhi Street, HITEC City, Hyderabad', '2003-02-10', 'MALE', 'Java, Web Development, MySQL, Problem Solving')
+    """, (cand1_id, cand2_id, cand3_id))
 
     # Candidate applications
     cursor.execute("""
         INSERT INTO `applications` (`candidate_id`, `job_id`, `status`, `remarks`)
         VALUES 
-        (%s, 1, 'TEST_COMPLETED', 'Applied for Programmer. High academic aggregate.'),
-        (%s, 2, 'TEST_COMPLETED', 'Applied for Data Entry Operator.')
-    """, (rahul_id, priya_id))
+        (%s, 1, 'APPLIED', 'Applied for Programmer position.'),
+        (%s, 2, 'APPLIED', 'Applied for Data Entry Operator position.'),
+        (%s, 1, 'APPLIED', 'Applied for Programmer position.')
+    """, (cand1_id, cand2_id, cand3_id))
 
     # Notifications
     cursor.execute("""
         INSERT INTO `notifications` (`user_id`, `title`, `message`, `notification_type`)
         VALUES
-        (%s, 'Registration Approved', 'Welcome Rahul! Your registration has been approved by the Admin. You can now take online exams and apply for jobs.', 'APPROVAL'),
-        (%s, 'Registration Approved', 'Welcome Priya! Your registration has been approved. You may proceed to your online assessment.', 'APPROVAL'),
-        (%s, 'Pending Verification', 'Your profile registration is currently pending admin review.', 'SYSTEM')
-    """, (rahul_id, priya_id, amit_id))
+        (%s, 'Registration Approved', 'Welcome Afsaldeen! Your registration has been approved.', 'APPROVAL'),
+        (%s, 'Registration Approved', 'Welcome Nafeel! Your registration has been approved.', 'APPROVAL'),
+        (%s, 'Registration Approved', 'Welcome Dhina! Your registration has been approved.', 'APPROVAL')
+    """, (cand1_id, cand2_id, cand3_id))
 
     # Audit log
     cursor.execute("""

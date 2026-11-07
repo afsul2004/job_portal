@@ -33,7 +33,7 @@ import { HREmployees } from './pages/hr/HREmployees';
 function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <Routes>
           {/* Public Authentication Routes */}
           <Route path="/" element={<Navigate to="/login" replace />} />

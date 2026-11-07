@@ -4,6 +4,19 @@ A comprehensive, production-grade full-stack web application built according to 
 
 ---
 
+## 🌐 Live Production Backend (Railway)
+
+The backend is deployed and running live on Railway:
+
+| Service | URL |
+| :--- | :--- |
+| **Backend API Root** | [https://jobportal-production-6092.up.railway.app/](https://jobportal-production-6092.up.railway.app/) |
+| **Swagger UI Documentation** | [https://jobportal-production-6092.up.railway.app/docs](https://jobportal-production-6092.up.railway.app/docs) |
+| **ReDoc Documentation** | [https://jobportal-production-6092.up.railway.app/redoc](https://jobportal-production-6092.up.railway.app/redoc) |
+| **OpenAPI Specification** | [https://jobportal-production-6092.up.railway.app/openapi.json](https://jobportal-production-6092.up.railway.app/openapi.json) |
+
+---
+
 ## 1. Project Architecture & Highlights
 
 - **Frontend:** React 18, Vite, React Router v6, Axios, Lucide Icons, Modern Blue/Slate CSS Design System.
@@ -57,9 +70,9 @@ The system uses 17 normalized tables:
 | :--- | :--- | :--- | :--- |
 | **System Administrator** | `admin@jobportal.com` | `Admin@123` | Full administrative control |
 | **HR Recruitment Officer** | `hr@jobportal.com` | `Hr@123` | Candidate review & employee onboarding |
-| **Candidate (Programmer)** | `rahul@example.com` | `Candidate@123` | Pre-approved, 82.5% academic aggregate |
-| **Candidate (Data Entry)** | `priya@example.com` | `Candidate@123` | Pre-approved, 71.0% academic aggregate |
-| **New Candidate** | `amit@example.com` | `Candidate@123` | Pending Admin Approval status |
+| **Candidate 1 (Afsaldeen)** | `afsal123@gmail.com` | `Afsal123` | Pre-approved, 85.0% academic aggregate |
+| **Candidate 2 (Nafeel)** | `nafil123@gmail.com` | `Nafil123` | Pre-approved, 78.0% academic aggregate |
+| **Candidate 3 (Dhina)** | `dhina123@gmail.com` | `Dhine123` | Pre-approved, 72.0% academic aggregate |
 
 ---
 
@@ -90,11 +103,22 @@ The system uses 17 normalized tables:
    cd frontend
    npm install
    ```
-2. Launch Vite development server:
+2. Configure Environment:
+   By default, the frontend connects to the **live Railway backend** (`https://jobportal-production-6092.up.railway.app/api`).
+   To point to your local FastAPI backend instead, update `frontend/.env`:
+   ```env
+   VITE_API_URL=http://localhost:8000/api
+   ```
+3. Launch Vite development server:
    ```bash
    npm run dev
    ```
-   Access Web Portal: `http://localhost:5173`
+   Access Web Portal: `http://localhost:5173` (or `http://localhost:5173/job_portal/`)
+
+4. Build & Deploy Frontend (GitHub Pages):
+   ```bash
+   npm run deploy
+   ```
 
 ---
 

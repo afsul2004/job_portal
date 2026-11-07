@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { CandidateSidebar } from './CandidateSidebar';
 import { TopBar } from '../../components/TopBar';
-import api from '../../api/client';
+import api, { BACKEND_URL } from '../../api/client';
 import { useAuth } from '../../context/AuthContext';
 import { 
   User, Mail, Phone, BookOpen, MapPin, Upload, FileCheck, 
@@ -185,7 +185,7 @@ export const CandidateProfile = () => {
                 </p>
                 {profile?.resume_path && (
                   <div style={{ marginTop: '10px', display: 'flex', alignItems: 'center', gap: '8px', color: '#16a34a', fontSize: '0.85rem', fontWeight: 600 }}>
-                    <FileCheck size={16} /> Current Resume on file: <a href={`http://localhost:8000${profile.resume_path}`} target="_blank" rel="noreferrer" style={{ textDecoration: 'underline', color: '#2563eb' }}>View PDF Document</a>
+                    <FileCheck size={16} /> Current Resume on file: <a href={`${BACKEND_URL}${profile.resume_path}`} target="_blank" rel="noreferrer" style={{ textDecoration: 'underline', color: '#2563eb' }}>View PDF Document</a>
                   </div>
                 )}
               </div>

@@ -5,15 +5,20 @@ class Settings:
     VERSION: str = "1.0.0"
     API_V1_STR: str = "/api"
 
-    # MySQL connection configuration
-    DB_HOST: str = os.getenv("DB_HOST", "localhost")
-    DB_PORT: int = int(os.getenv("DB_PORT", "3306"))
-    DB_USER: str = os.getenv("DB_USER", "root")
-    DB_PASSWORD: str = os.getenv("DB_PASSWORD", "root")
-    DB_NAME: str = os.getenv("DB_NAME", "job_portal_exam")
+    # MySQL connection configuration (supports standard DB_* and Railway's MYSQL* variables)
+    DB_HOST: str = os.getenv("MYSQLHOST") or os.getenv("DB_HOST", "localhost")
+    DB_PORT: int = int(os.getenv("MYSQLPORT") or os.getenv("DB_PORT", "3306"))
+    DB_USER: str = os.getenv("MYSQLUSER") or os.getenv("DB_USER", "root")
+    DB_PASSWORD: str = os.getenv("MYSQLPASSWORD") or os.getenv("DB_PASSWORD", "root")
+    DB_NAME: str = os.getenv("MYSQLDATABASE") or os.getenv("DB_NAME", "job_portal_exam")
 
     @property
     def SQLALCHEMY_DATABASE_URI(self) -> str:
+        database_url = os.getenv("DATABASE_URL") or os.getenv("MYSQL_URL")
+        if database_url:
+            if database_url.startswith("mysql://"):
+                return database_url.replace("mysql://", "mysql+pymysql://", 1)
+            return database_url
         return f"mysql+pymysql://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}?charset=utf8mb4"
 
     # JWT Authentication configuration

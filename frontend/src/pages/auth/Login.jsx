@@ -26,7 +26,18 @@ export const Login = () => {
         navigate('/candidate');
       }
     } catch (err) {
-      const msg = err.response?.data?.detail || 'Invalid email or password. Please try again.';
+      let msg = 'Invalid email or password. Please try again.';
+      if (err.response?.data?.detail) {
+        msg = typeof err.response.data.detail === 'string'
+          ? err.response.data.detail
+          : JSON.stringify(err.response.data.detail);
+      } else if (err.response?.status === 405) {
+        msg = 'Connection error (HTTP 405): The backend service is currently serving static web files instead of the FastAPI API.';
+      } else if (err.response?.status >= 500) {
+        msg = `Backend server error (${err.response.status}). Please check server logs.`;
+      } else if (!err.response) {
+        msg = 'Unable to reach backend server. Please verify the backend URL is online.';
+      }
       setError(msg);
     } finally {
       setLoading(false);
@@ -80,7 +91,9 @@ export const Login = () => {
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '10px' }}>
               <button onClick={() => fillQuickCredentials('admin@jobportal.com', 'Admin@123')} style={{ background: '#2563eb', color: 'white', padding: '4px 10px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600 }}>Admin</button>
               <button onClick={() => fillQuickCredentials('hr@jobportal.com', 'Hr@123')} style={{ background: '#0284c7', color: 'white', padding: '4px 10px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600 }}>HR Officer</button>
-              <button onClick={() => fillQuickCredentials('rahul@example.com', 'Candidate@123')} style={{ background: '#059669', color: 'white', padding: '4px 10px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600 }}>Candidate (Rahul)</button>
+              <button onClick={() => fillQuickCredentials('afsal123@gmail.com', 'Afsal123')} style={{ background: '#059669', color: 'white', padding: '4px 10px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600 }}>Afsaldeen</button>
+              <button onClick={() => fillQuickCredentials('nafil123@gmail.com', 'Nafil123')} style={{ background: '#0d9488', color: 'white', padding: '4px 10px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600 }}>Nafeel</button>
+              <button onClick={() => fillQuickCredentials('dhina123@gmail.com', 'Dhine123')} style={{ background: '#16a34a', color: 'white', padding: '4px 10px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600 }}>Dhina</button>
             </div>
           </div>
         </div>

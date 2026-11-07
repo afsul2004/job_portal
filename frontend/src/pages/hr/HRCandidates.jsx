@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { HRSidebar } from './HRSidebar';
 import { TopBar } from '../../components/TopBar';
-import api from '../../api/client';
+import api, { BACKEND_URL } from '../../api/client';
 import { Search, Filter, FileText, CheckCircle, XCircle, Award, ExternalLink } from 'lucide-react';
 
 export const HRCandidates = () => {
@@ -188,7 +188,7 @@ export const HRCandidates = () => {
                       <td>
                         {c.resume_path ? (
                           <a
-                            href={`http://localhost:8000${c.resume_path}`}
+                            href={`${BACKEND_URL}${c.resume_path}`}
                             target="_blank"
                             rel="noreferrer"
                             className="btn btn-sm btn-outline"
