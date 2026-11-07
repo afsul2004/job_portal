@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://jobportal-production-6092.up.railway.app/api';
+export const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://fabulous-reprieve-production-94b4.up.railway.app/api';
 export const BACKEND_URL = API_BASE_URL.replace(/\/api\/?$/, '');
 
 const api = axios.create({

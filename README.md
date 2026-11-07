@@ -10,10 +10,10 @@ The backend is deployed and running live on Railway:
 
 | Service | URL |
 | :--- | :--- |
-| **Backend API Root** | [https://jobportal-production-6092.up.railway.app/](https://jobportal-production-6092.up.railway.app/) |
-| **Swagger UI Documentation** | [https://jobportal-production-6092.up.railway.app/docs](https://jobportal-production-6092.up.railway.app/docs) |
-| **ReDoc Documentation** | [https://jobportal-production-6092.up.railway.app/redoc](https://jobportal-production-6092.up.railway.app/redoc) |
-| **OpenAPI Specification** | [https://jobportal-production-6092.up.railway.app/openapi.json](https://jobportal-production-6092.up.railway.app/openapi.json) |
+| **Backend API Root** | [https://fabulous-reprieve-production-94b4.up.railway.app/](https://fabulous-reprieve-production-94b4.up.railway.app/) |
+| **Swagger UI Documentation** | [https://fabulous-reprieve-production-94b4.up.railway.app/docs](https://fabulous-reprieve-production-94b4.up.railway.app/docs) |
+| **ReDoc Documentation** | [https://fabulous-reprieve-production-94b4.up.railway.app/redoc](https://fabulous-reprieve-production-94b4.up.railway.app/redoc) |
+| **OpenAPI Specification** | [https://fabulous-reprieve-production-94b4.up.railway.app/openapi.json](https://fabulous-reprieve-production-94b4.up.railway.app/openapi.json) |
 
 ---
 

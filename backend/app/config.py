@@ -12,6 +12,9 @@ class Settings:
     DB_PASSWORD: str = os.getenv("MYSQLPASSWORD") or os.getenv("DB_PASSWORD", "root")
     DB_NAME: str = os.getenv("MYSQLDATABASE") or os.getenv("DB_NAME", "job_portal_exam")
 
+    # Railway MySQL Cloud Database URI
+    CLOUD_DB_URI: str = "mysql+pymysql://root:rBocBPvjvxndEFQpFmlHRYGhIXoJwAoZ@maglev.proxy.rlwy.net:46607/railway?charset=utf8mb4"
+
     @property
     def SQLALCHEMY_DATABASE_URI(self) -> str:
         database_url = os.getenv("DATABASE_URL") or os.getenv("MYSQL_URL")
@@ -19,6 +22,21 @@ class Settings:
             if database_url.startswith("mysql://"):
                 return database_url.replace("mysql://", "mysql+pymysql://", 1)
             return database_url
+
+        # If individual MySQL/DB env vars exist (e.g. from Railway MySQL plugin)
+        mysql_host = os.getenv("MYSQLHOST") or os.getenv("DB_HOST")
+        if mysql_host and mysql_host != "localhost":
+            user = os.getenv("MYSQLUSER") or os.getenv("DB_USER", "root")
+            pw = os.getenv("MYSQLPASSWORD") or os.getenv("DB_PASSWORD", "")
+            port = os.getenv("MYSQLPORT") or os.getenv("DB_PORT", "3306")
+            db_name = os.getenv("MYSQLDATABASE") or os.getenv("DB_NAME", "railway")
+            return f"mysql+pymysql://{user}:{pw}@{mysql_host}:{port}/{db_name}?charset=utf8mb4"
+
+        # When running in Railway production environment (PORT is set)
+        if os.getenv("PORT") or os.getenv("RAILWAY_ENVIRONMENT"):
+            return self.CLOUD_DB_URI
+
+        # Default local development fallback
         return f"mysql+pymysql://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}?charset=utf8mb4"
 
     # JWT Authentication configuration
