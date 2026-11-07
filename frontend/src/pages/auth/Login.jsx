@@ -44,11 +44,6 @@ export const Login = () => {
     }
   };
 
-  const fillQuickCredentials = (demoEmail, demoPw) => {
-    setEmail(demoEmail);
-    setPassword(demoPw);
-  };
-
   return (
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#f1f5f9', padding: '24px' }}>
       <div style={{ maxWidth: '960px', width: '100%', background: 'white', borderRadius: '24px', boxShadow: 'var(--shadow-xl)', overflow: 'hidden', display: 'grid', gridTemplateColumns: '1.1fr 1fr' }}>
@@ -86,15 +81,8 @@ export const Login = () => {
             </div>
           </div>
 
-          <div style={{ marginTop: '40px', background: 'rgba(255,255,255,0.08)', borderRadius: '12px', padding: '16px' }}>
-            <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#93c5fd', fontWeight: 700 }}>Quick Login Presets:</span>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '10px' }}>
-              <button onClick={() => fillQuickCredentials('admin@jobportal.com', 'Admin@123')} style={{ background: '#2563eb', color: 'white', padding: '4px 10px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600 }}>Admin</button>
-              <button onClick={() => fillQuickCredentials('hr@jobportal.com', 'Hr@123')} style={{ background: '#0284c7', color: 'white', padding: '4px 10px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600 }}>HR Officer</button>
-              <button onClick={() => fillQuickCredentials('afsal123@gmail.com', 'Afsal123')} style={{ background: '#059669', color: 'white', padding: '4px 10px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600 }}>Afsaldeen</button>
-              <button onClick={() => fillQuickCredentials('nafil123@gmail.com', 'Nafil123')} style={{ background: '#0d9488', color: 'white', padding: '4px 10px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600 }}>Nafeel</button>
-              <button onClick={() => fillQuickCredentials('dhina123@gmail.com', 'Dhine123')} style={{ background: '#16a34a', color: 'white', padding: '4px 10px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600 }}>Dhina</button>
-            </div>
+          <div style={{ marginTop: '40px', paddingTop: '20px', borderTop: '1px solid rgba(255,255,255,0.15)', fontSize: '0.8rem', color: '#93c5fd' }}>
+            Secure Job Portal & Online Examination System
           </div>
         </div>
 

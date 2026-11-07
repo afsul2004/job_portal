@@ -96,15 +96,15 @@ export const Register = () => {
           <div style={{ width: 64, height: 64, borderRadius: '50%', background: '#dcfce7', color: '#16a34a', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
             <CheckCircle2 size={36} />
           </div>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#0f172a', marginBottom: '12px' }}>Registration Submitted!</h2>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#0f172a', marginBottom: '12px' }}>Registration Successful!</h2>
           <p style={{ color: '#64748b', fontSize: '0.95rem', lineHeight: 1.6, marginBottom: '24px' }}>
             {successMsg}
           </p>
           <div style={{ background: '#eff6ff', borderRadius: '12px', padding: '16px', marginBottom: '28px', textAlign: 'left', fontSize: '0.85rem', color: '#1e40af' }}>
-            <strong>Next Step:</strong> The Administrator will review your educational qualification and allocate an exam centre. You can log in once approved.
+            <strong>Next Step:</strong> Your candidate account has been activated with your chosen testing centre. You can now sign in with your email and password to view open positions and take your online examination.
           </div>
           <Link to="/login" className="btn btn-primary" style={{ width: '100%' }}>
-            Back to Sign In
+            Proceed to Sign In
           </Link>
         </div>
       </div>

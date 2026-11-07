@@ -122,7 +122,7 @@ def init_and_seed_db():
             db.flush()
             db.add(ExamQuestion(exam_id=exam.id, question_id=question_obj.id))
 
-        # 5. Default Users
+        # 5. Default Users (Admin and HR only - Candidates register via portal)
         admin_user = User(
             full_name="System Administrator",
             email="admin@jobportal.com",
@@ -139,34 +139,10 @@ def init_and_seed_db():
             status=UserStatus.ACTIVE,
             phone="+91 9876543211"
         )
-        cand1 = User(
-            full_name="Afsaldeen",
-            email="afsal123@gmail.com",
-            password_hash=get_password_hash("Afsal123"),
-            role=UserRole.CANDIDATE,
-            status=UserStatus.APPROVED,
-            phone="+91 9876543201"
-        )
-        cand2 = User(
-            full_name="Nafeel",
-            email="nafil123@gmail.com",
-            password_hash=get_password_hash("Nafil123"),
-            role=UserRole.CANDIDATE,
-            status=UserStatus.APPROVED,
-            phone="+91 9876543202"
-        )
-        cand3 = User(
-            full_name="Dhina",
-            email="dhina123@gmail.com",
-            password_hash=get_password_hash("Dhine123"),
-            role=UserRole.CANDIDATE,
-            status=UserStatus.APPROVED,
-            phone="+91 9876543203"
-        )
-        db.add_all([admin_user, hr_user, cand1, cand2, cand3])
+        db.add_all([admin_user, hr_user])
         db.flush()
 
-        # 6. HR & Candidate Profiles
+        # 6. HR Profile
         hr_prof = HRProfile(
             user_id=hr_user.id,
             employee_code="HR-2026-001",
@@ -175,61 +151,11 @@ def init_and_seed_db():
         )
         db.add(hr_prof)
 
-        cand1_prof = CandidateProfile(
-            user_id=cand1.id,
-            qualification="B.Tech / B.E",
-            stream_specialization="Computer Science and Engineering",
-            academic_percentage=85.00,
-            passing_year=2025,
-            preferred_city_id=chennai.id,
-            allocated_centre_id=centres[0].id,
-            address="Flat 402, Anna Nagar, Chennai",
-            gender=GenderEnum.MALE,
-            skills="Python, React, MySQL, FastAPI, Data Structures"
-        )
-        cand2_prof = CandidateProfile(
-            user_id=cand2.id,
-            qualification="B.Com / B.Sc",
-            stream_specialization="Information Systems",
-            academic_percentage=78.00,
-            passing_year=2024,
-            preferred_city_id=bangalore.id,
-            allocated_centre_id=centres[2].id,
-            address="12th Main Road, Indiranagar, Bengaluru",
-            gender=GenderEnum.MALE,
-            skills="Typing 50wpm, MS Excel, Database entry, Documentation"
-        )
-        cand3_prof = CandidateProfile(
-            user_id=cand3.id,
-            qualification="B.Tech",
-            stream_specialization="Information Technology",
-            academic_percentage=72.00,
-            passing_year=2025,
-            preferred_city_id=hyderabad.id,
-            allocated_centre_id=centres[3].id,
-            address="24 Gandhi Street, HITEC City, Hyderabad",
-            gender=GenderEnum.MALE,
-            skills="Java, Web Development, MySQL, Problem Solving"
-        )
-        db.add_all([cand1_prof, cand2_prof, cand3_prof])
-
-        # 7. Applications
-        app1 = Application(candidate_id=cand1.id, job_id=job1.id, status=ApplicationStatus.APPLIED, remarks="Applied for Programmer.")
-        app2 = Application(candidate_id=cand2.id, job_id=job2.id, status=ApplicationStatus.APPLIED, remarks="Applied for Data Entry Operator.")
-        app3 = Application(candidate_id=cand3.id, job_id=job1.id, status=ApplicationStatus.APPLIED, remarks="Applied for Programmer.")
-        db.add_all([app1, app2, app3])
-
-        # 8. Notifications
-        n1 = Notification(user_id=cand1.id, title="Registration Approved", message="Welcome Afsaldeen! Your registration has been approved. You can now take online exams and apply for jobs.", notification_type="APPROVAL")
-        n2 = Notification(user_id=cand2.id, title="Registration Approved", message="Welcome Nafeel! Your registration has been approved. You may proceed to your online assessment.", notification_type="APPROVAL")
-        n3 = Notification(user_id=cand3.id, title="Registration Approved", message="Welcome Dhina! Your registration has been approved. You can now access assessments.", notification_type="APPROVAL")
-        db.add_all([n1, n2, n3])
-
-        # 9. Audit Log
+        # 7. Audit Log
         audit = AuditLog(
             performed_by_user_id=admin_user.id,
             action="DATABASE_SEED",
-            details="Initial system users, job roles, examination questions and centres populated.",
+            details="Initial system Admin, HR officer, job positions, questions, and centres populated.",
             ip_address="127.0.0.1"
         )
         db.add(audit)

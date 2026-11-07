@@ -3,7 +3,10 @@ from sqlalchemy.orm import Session
 from datetime import timedelta
 
 from app.database import get_db
-from app.models.entities import User, CandidateProfile, Notification, AuditLog, UserRole, UserStatus
+from app.models.entities import (
+    User, CandidateProfile, Notification, AuditLog, ExamCentre,
+    UserRole, UserStatus
+)
 from app.schemas.dto import UserRegister, UserLogin, TokenResponse
 from app.auth import verify_password, get_password_hash, create_access_token, get_current_user
 
@@ -19,13 +22,13 @@ def register_candidate(req: UserRegister, db: Session = Depends(get_db)):
             detail="An account with this email address already exists"
         )
 
-    # By default, registration requires admin approval
+    # Newly registered candidates are automatically APPROVED for immediate access
     new_user = User(
         full_name=req.full_name.strip(),
         email=req.email.lower().strip(),
         password_hash=get_password_hash(req.password),
         role=UserRole.CANDIDATE,
-        status=UserStatus.PENDING, # Pending Admin Approval
+        status=UserStatus.APPROVED,
         phone=req.phone
     )
     db.add(new_user)
@@ -41,6 +44,13 @@ def register_candidate(req: UserRegister, db: Session = Depends(get_db)):
         except Exception:
             parsed_dob = None
 
+    # Auto-allocate exam centre in preferred city if available
+    allocated_centre_id = None
+    if req.preferred_city_id:
+        centre = db.query(ExamCentre).filter(ExamCentre.city_id == req.preferred_city_id).first()
+        if centre:
+            allocated_centre_id = centre.id
+
     # Create Candidate Profile
     profile = CandidateProfile(
         user_id=new_user.id,
@@ -49,6 +59,7 @@ def register_candidate(req: UserRegister, db: Session = Depends(get_db)):
         academic_percentage=req.academic_percentage,
         passing_year=req.passing_year,
         preferred_city_id=req.preferred_city_id,
+        allocated_centre_id=allocated_centre_id,
         dob=parsed_dob,
         gender=req.gender,
         skills=req.skills,
@@ -59,9 +70,9 @@ def register_candidate(req: UserRegister, db: Session = Depends(get_db)):
     # Create Welcome Notification
     notification = Notification(
         user_id=new_user.id,
-        title="Registration Received",
-        message="Your application registration is awaiting administrator review. You will receive access once approved.",
-        notification_type="SYSTEM"
+        title="Registration Complete",
+        message=f"Welcome {new_user.full_name}! Your candidate registration is successful. You can now access online examinations and apply for positions.",
+        notification_type="APPROVAL"
     )
     db.add(notification)
 
@@ -75,7 +86,7 @@ def register_candidate(req: UserRegister, db: Session = Depends(get_db)):
     db.commit()
 
     return {
-        "message": "Registration successful! Your account is pending administrator approval before examination access.",
+        "message": "Registration successful! You can now sign in with your email and password.",
         "user_id": new_user.id,
         "status": new_user.status.value
     }

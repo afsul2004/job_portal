@@ -68,11 +68,10 @@ The system uses 17 normalized tables:
 
 | Role | Email | Password | Details |
 | :--- | :--- | :--- | :--- |
-| **System Administrator** | `admin@jobportal.com` | `Admin@123` | Full administrative control |
+| **System Administrator** | `admin@jobportal.com` | `Admin@123` | Full administrative control & candidate approvals |
 | **HR Recruitment Officer** | `hr@jobportal.com` | `Hr@123` | Candidate review & employee onboarding |
-| **Candidate 1 (Afsaldeen)** | `afsal123@gmail.com` | `Afsal123` | Pre-approved, 85.0% academic aggregate |
-| **Candidate 2 (Nafeel)** | `nafil123@gmail.com` | `Nafil123` | Pre-approved, 78.0% academic aggregate |
-| **Candidate 3 (Dhina)** | `dhina123@gmail.com` | `Dhine123` | Pre-approved, 72.0% academic aggregate |
+
+> **Note on Candidates:** By default, no candidate accounts are pre-seeded in the database. All candidates register self-service via the registration portal (`/register`). Administrators verify and approve candidate accounts from the Admin Dashboard.
 
 ---
 
